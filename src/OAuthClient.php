@@ -2,6 +2,7 @@
 namespace CarloNicora\Minimalism\Services\OAuthClient;
 
 use CarloNicora\Minimalism\Abstracts\AbstractService;
+use CarloNicora\Minimalism\Factories\ServiceFactory;
 use CarloNicora\Minimalism\Interfaces\Security\Interfaces\ApplicationInterface;
 use CarloNicora\Minimalism\Interfaces\Security\Interfaces\SecurityInterface;
 use Exception;
@@ -23,12 +24,12 @@ class OAuthClient extends AbstractService implements SecurityInterface
     }
 
     /**
+     * @param ServiceFactory $services
      * @return void
      */
-    public function initialise(
-    ): void
+    public function postIntialise(ServiceFactory $services,): void
     {
-        parent::initialise();
+        parent::postIntialise($services);
 
         $headers = getallheaders();
         $bearer = $headers['Authorization'] ?? null;
@@ -47,6 +48,14 @@ class OAuthClient extends AbstractService implements SecurityInterface
                 }
             }
         }
+    }
+
+    /**
+     * @return string|null
+     */
+    public static function getBaseInterface(): ?string
+    {
+        return SecurityInterface::class;
     }
 
     /**
