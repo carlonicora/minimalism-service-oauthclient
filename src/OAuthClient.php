@@ -2,11 +2,13 @@
 namespace CarloNicora\Minimalism\Services\OAuthClient;
 
 use CarloNicora\Minimalism\Abstracts\AbstractService;
+use CarloNicora\Minimalism\Interfaces\Security\Interfaces\ApplicationInterface;
+use CarloNicora\Minimalism\Interfaces\Security\Interfaces\SecurityInterface;
 use Exception;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
-class OAuthClient extends AbstractService
+class OAuthClient extends AbstractService implements SecurityInterface
 {
     /** @var array|null  */
     private ?array $token=null;
@@ -47,23 +49,26 @@ class OAuthClient extends AbstractService
         }
     }
 
-    public function isTokenValid(
-    ): bool {
-        return $this->token !== null;
-    }
-
     /**
-     * @return int
+     * @return int|null
      */
-    public function getUserId(): int {
+    public function getUserId(): ?int {
         return $this->token['userId'];
     }
 
     /**
-     * @return bool
+     * @return bool|null
      */
-    public function isRegisteredUser(): bool {
+    public function isUser(): ?bool {
         return $this->token['isUser'];
+    }
+
+    /**
+     * @return ApplicationInterface|null
+     */
+    public function getApp(
+    ): ?ApplicationInterface {
+        return null;
     }
 }
 
