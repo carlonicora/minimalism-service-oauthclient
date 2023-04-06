@@ -43,7 +43,7 @@ class OAuthClient extends AbstractService implements SecurityInterface
                     $this->token = null;
                 }
 
-                if ($this->token['expiration'] !== null && $this->token['expiration'] > time()) {
+                if ($this->token['expiration'] !== null && $this->token['expiration'] < time()) {
                     $this->token = null;
                 }
             }
